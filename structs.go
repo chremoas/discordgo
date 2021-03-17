@@ -152,7 +152,7 @@ type Integration struct {
 	SyncedAt          Timestamp          `json:"synced_at"`
 }
 
-//ExpireBehavior of Integration
+// ExpireBehavior of Integration
 // https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors
 type ExpireBehavior int
 
@@ -570,6 +570,40 @@ type Guild struct {
 
 	// Permissions of our user
 	Permissions int64 `json:"permissions,string"`
+}
+
+// A GuildPreview holds data related to a specific public Discord Guild, even if the user is not in the guild.
+type GuildPreview struct {
+	// The ID of the guild.
+	ID string `json:"id"`
+
+	// The name of the guild. (2–100 characters)
+	Name string `json:"name"`
+
+	// The hash of the guild's icon. Use Session.GuildIcon
+	// to retrieve the icon itself.
+	Icon string `json:"icon"`
+
+	// The hash of the guild's splash.
+	Splash string `json:"splash"`
+
+	// The hash of the guild's discovery splash.
+	DiscoverySplash string `json:"discovery_splash"`
+
+	// A list of the custom emojis present in the guild.
+	Emojis []*Emoji `json:"emojis"`
+
+	// The list of enabled guild features
+	Features []string `json:"features"`
+
+	// Approximate number of members in this guild, returned from the GET /guild/<id> endpoint when with_counts is true
+	ApproximateMemberCount int `json:"approximate_member_count"`
+
+	// Approximate number of non-offline members in this guild, returned from the GET /guild/<id> endpoint when with_counts is true
+	ApproximatePresenceCount int `json:"approximate_presence_count"`
+
+	// the description for the guild
+	Description string `json:"description"`
 }
 
 // MessageNotifications is the notification level for a guild
@@ -1051,42 +1085,6 @@ type UserGuildSettingsEdit struct {
 type APIErrorMessage struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
-}
-
-// Webhook stores the data for a webhook.
-type Webhook struct {
-	ID        string      `json:"id"`
-	Type      WebhookType `json:"type"`
-	GuildID   string      `json:"guild_id"`
-	ChannelID string      `json:"channel_id"`
-	User      *User       `json:"user"`
-	Name      string      `json:"name"`
-	Avatar    string      `json:"avatar"`
-	Token     string      `json:"token"`
-
-	// ApplicationID is the bot/OAuth2 application that created this webhook
-	ApplicationID string `json:"application_id,omitempty"`
-}
-
-// WebhookType is the type of Webhook (see WebhookType* consts) in the Webhook struct
-// https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-types
-type WebhookType int
-
-// Valid WebhookType values
-const (
-	WebhookTypeIncoming WebhookType = iota
-	WebhookTypeChannelFollower
-)
-
-// WebhookParams is a struct for webhook params, used in the WebhookExecute command.
-type WebhookParams struct {
-	Content         string                  `json:"content,omitempty"`
-	Username        string                  `json:"username,omitempty"`
-	AvatarURL       string                  `json:"avatar_url,omitempty"`
-	TTS             bool                    `json:"tts,omitempty"`
-	File            string                  `json:"file,omitempty"`
-	Embeds          []*MessageEmbed         `json:"embeds,omitempty"`
-	AllowedMentions *MessageAllowedMentions `json:"allowed_mentions,omitempty"`
 }
 
 // MessageReaction stores the data for a message reaction.
